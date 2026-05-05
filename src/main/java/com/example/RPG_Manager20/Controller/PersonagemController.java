@@ -32,12 +32,11 @@ public class PersonagemController {
         return new ResponseEntity<>(personagemMapper.toDto(personagem), HttpStatus.CREATED);
     }
     @GetMapping("/listarTodos")
-    public List<PersonagemDTO> listar() {
+        public List<PersonagemDTO> listar() {
         return personagemService.list().stream().map(u-> personagemMapper.toDto(u)).collect(Collectors.toList());
     }
     @GetMapping("/listar/{idPersonagem}")
     public ResponseEntity<PersonagemDTO> getPersonagem(@PathVariable("idPersonagem") Long idPersonagem){
         return new ResponseEntity<>(personagemMapper.toDto(personagemService.findById(idPersonagem)), HttpStatus.CREATED);
     }
-
 }
