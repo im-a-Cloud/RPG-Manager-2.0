@@ -1,7 +1,6 @@
 package com.example.RPG_Manager20.Model.Entities;
 
 import com.example.RPG_Manager20.Model.Enums.OrigemHabilidade;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
