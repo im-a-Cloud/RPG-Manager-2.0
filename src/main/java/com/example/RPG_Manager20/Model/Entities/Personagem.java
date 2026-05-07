@@ -8,12 +8,10 @@ public class Personagem extends AbstractModel {
 
     private String nomePersonagem;
     private int nivelPersonagem;
-
-    // 🔥 OBRIGATÓRIO para o JPA
+    
     public Personagem() {
     }
 
-    // (opcional) construtor útil pra você
     public Personagem(String nomePersonagem, int nivelPersonagem) {
         this.nomePersonagem = nomePersonagem;
         this.nivelPersonagem = nivelPersonagem;

@@ -4,6 +4,7 @@ import com.example.RPG_Manager20.Model.DTO.PersonagemDTO;
 import com.example.RPG_Manager20.Model.Entities.Personagem;
 import com.example.RPG_Manager20.Model.Mapper.PersonagemMapper;
 import com.example.RPG_Manager20.Service.PersonagemService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class PersonagemController {
 
     }
     @PostMapping("/criar")
-    public ResponseEntity<PersonagemDTO> create(@RequestBody PersonagemDTO personagemDTO) {
+    public ResponseEntity<PersonagemDTO> create(@Valid @RequestBody PersonagemDTO personagemDTO) {
         Personagem personagem = personagemMapper.toEntity(personagemDTO);
         personagem = personagemService.save(personagem);
         return new ResponseEntity<>(personagemMapper.toDto(personagem), HttpStatus.CREATED);

@@ -21,6 +21,11 @@ public class PersonagemService {
         this.personagemRepository = personagemRepository;
     }
     public Personagem save(Personagem personagem){
+        /*if (personagem.getNivelPersonagem() < 1 || personagem.getNivelPersonagem() > 20) {
+            throw new RuntimeException("Nível deve ser entre 1 e 20");
+        }
+
+         */
         return personagemRepository.save(personagem);
     }
     public List<Personagem> list(){

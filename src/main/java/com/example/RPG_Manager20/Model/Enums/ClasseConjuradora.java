@@ -7,6 +7,6 @@ public enum ClasseConjuradora {
     BRUXO,
     MAGO,
     PALADINO,
-    RANGER,
+    PATRULHEIRO,
     ARTIFICIE
 }
