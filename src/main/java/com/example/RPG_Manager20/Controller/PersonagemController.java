@@ -30,6 +30,15 @@ public class PersonagemController {
     public ResponseEntity<PersonagemDTO> create(@Valid @RequestBody PersonagemDTO personagemDTO) {
         Personagem personagem = personagemMapper.toEntity(personagemDTO);
         personagem = personagemService.save(personagem);
+
+        System.out.println("Entity criada: " + personagem.getValorConstituicao());
+
+        PersonagemDTO response = personagemMapper.toDto(personagem);
+
+        System.out.println("Resposta: " + response.getBonusConstituicao());
+
+
+
         return new ResponseEntity<>(personagemMapper.toDto(personagem), HttpStatus.CREATED);
     }
     @GetMapping("/listarTodos")
