@@ -1,14 +1,20 @@
-package com.example.RPG_Manager20.Model.DTO;
+package com.example.RPG_Manager20.Model.DTO.Request;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
-public record PersonagemDTO(
+public record PersonagemRequestDTO(
+        @NotBlank(message = "Nome é obrigatório")
         String nomePersonagem,
 
         @Min(value = 1, message = "Nível deve ser entre 1 e 20")
         @Max(value = 20, message = "Nível deve ser entre 1 e 20")
         int nivelPersonagem,
+
+        @NotNull(message = "ID da classe é obrigatório")
+        Long classeId,
 
         @Min(value = 1, message = "Força deve ser entre 1 e 20")
         @Max(value = 20, message = "Força deve ser entre 1 e 20")
@@ -32,33 +38,6 @@ public record PersonagemDTO(
 
         @Min(value = 1, message = "Carisma deve ser entre 1 e 20")
         @Max(value = 20, message = "Carisma deve ser entre 1 e 20")
-        int valorCarisma) {
-    // Métodos auxiliares para calcular bônus
-    public int getBonusForca() {
-        return (valorForca - 10) / 2;
-    }
-
-    public int getBonusDestreza() {
-        return (valorDestreza - 10) / 2;
-    }
-
-    public int getBonusConstituicao() {
-        return (valorConstituicao - 10) / 2;
-    }
-
-    public int getBonusInteligencia() {
-        return (valorInteligencia - 10) / 2;
-    }
-
-    public int getBonusSabedoria() {
-        return (valorSabedoria - 10) / 2;
-    }
-
-    public int getBonusCarisma() {
-        return (valorCarisma - 10) / 2;
-    }
-
-    public int getBonusProficiencia() {
-        return Math.round((nivelPersonagem+3)/4) + 1;
-    }
+        int valorCarisma
+) {
 }

@@ -1,6 +1,7 @@
 package com.example.RPG_Manager20.Model.Entities;
 
 import com.example.RPG_Manager20.Model.Enums.Atributos;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -11,12 +12,24 @@ public class Personagem extends AbstractModel {
 
     private String nomePersonagem;
     private int nivelPersonagem;
+
+    // Atributos
+
     private int valorForca;
     private int valorDestreza;
     private int valorConstituicao;
     private int valorInteligencia;
     private int valorSabedoria;
     private int valorCarisma;
+
+    //Ligacção com classe, permitindo que um personagem tenha classe
+
+    @ManyToOne
+    @JoinColumn(name = "classe_id")
+    private Classe classePersonagem;
+
+    public Personagem() {
+    }
 
     public Personagem(String nomePersonagem, int nivelPersonagem, int valorForca, int valorDestreza, int valorConstituicao, int valorInteligencia, int valorSabedoria, int valorCarisma) {
         this.nomePersonagem = nomePersonagem;
@@ -29,7 +42,12 @@ public class Personagem extends AbstractModel {
         this.valorCarisma = valorCarisma;
     }
 
-    public Personagem() {
+    public Classe getClassePersonagem() {
+        return classePersonagem;
+    }
+
+    public void setClassePersonagem(Classe classePersonagem) {
+        this.classePersonagem = classePersonagem;
     }
 
     public String getNomePersonagem() {
@@ -95,19 +113,4 @@ public class Personagem extends AbstractModel {
     public void setValorCarisma(int valorCarisma) {
         this.valorCarisma = valorCarisma;
     }
-
-    /*
-    public int getBonusPorAtributo(Atributos atributo) {
-        int valor = switch (atributo) {
-            case FORCA -> valorForca;
-            case DESTREZA -> valorDestreza;
-            case CONSTITUICAO -> valorConstituicao;
-            case INTELIGENCIA -> valorInteligencia;
-            case SABEDORIA -> valorSabedoria;
-            case CARISMA -> valorCarisma;
-        };
-        return (valor - 10) / 2;
-    }
-
- */
 }

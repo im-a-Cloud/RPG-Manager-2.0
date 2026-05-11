@@ -1,8 +1,8 @@
 package com.example.RPG_Manager20.Controller;
 
-import com.example.RPG_Manager20.Model.DTO.PersonagemDTO;
-import com.example.RPG_Manager20.Model.Entities.Personagem;
-import com.example.RPG_Manager20.Model.Mapper.PersonagemMapper;
+import com.example.RPG_Manager20.Model.DTO.Request.PersonagemRequestDTO;
+import com.example.RPG_Manager20.Model.DTO.Response.PersonagemResponseDTO;
+import com.example.RPG_Manager20.Model.DTO.Summary.PersonagemSummaryDTO;
 import com.example.RPG_Manager20.Service.PersonagemService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/personagem")
@@ -20,33 +19,35 @@ public class PersonagemController {
     @Autowired
     private PersonagemService personagemService;
 
-    @Autowired
-    private PersonagemMapper personagemMapper;
-
-    public PersonagemController(PersonagemService personagemService) {
-
-    }
     @PostMapping("/criar")
-    public ResponseEntity<PersonagemDTO> create(@Valid @RequestBody PersonagemDTO personagemDTO) {
-        Personagem personagem = personagemMapper.toEntity(personagemDTO);
-        personagem = personagemService.save(personagem);
-
-        System.out.println("Entity criada: " + personagem.getValorConstituicao());
-
-        PersonagemDTO response = personagemMapper.toDto(personagem);
-
-        System.out.println("Resposta: " + response.getBonusConstituicao());
-
-
-
-        return new ResponseEntity<>(personagemMapper.toDto(personagem), HttpStatus.CREATED);
+    public ResponseEntity<PersonagemResponseDTO> criar(@Valid @RequestBody PersonagemRequestDTO requestDTO) {
+        PersonagemResponseDTO response = personagemService.criarPersonagem(requestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
-    @GetMapping("/listarTodos")
-        public List<PersonagemDTO> listar() {
-        return personagemService.list().stream().map(u-> personagemMapper.toDto(u)).collect(Collectors.toList());
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PersonagemResponseDTO> buscarPorId(@PathVariable Long id) {
+        PersonagemResponseDTO response = personagemService.buscarPersonagemPorId(id);
+        return ResponseEntity.ok(response);
     }
-    @GetMapping("/listar/{idPersonagem}")
-    public ResponseEntity<PersonagemDTO> getPersonagem(@PathVariable("idPersonagem") Long idPersonagem){
-        return new ResponseEntity<>(personagemMapper.toDto(personagemService.findById(idPersonagem)), HttpStatus.CREATED);
+
+    @GetMapping("/listar")
+    public ResponseEntity<List<PersonagemSummaryDTO>> listarTodos() {
+        List<PersonagemSummaryDTO> lista = personagemService.listarPersonagens();
+        return ResponseEntity.ok(lista);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PersonagemResponseDTO> atualizar(
+            @PathVariable Long id,
+            @Valid @RequestBody PersonagemRequestDTO requestDTO) {
+        PersonagemResponseDTO response = personagemService.atualizarPersonagem(id, requestDTO);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        personagemService.deletarPersonagem(id);
+        return ResponseEntity.noContent().build();
     }
 }
