@@ -2,7 +2,10 @@ package com.example.RPG_Manager20.Model.Entities;
 
 import com.example.RPG_Manager20.Model.Enums.Atributos;
 import com.example.RPG_Manager20.Model.Enums.Classes;
+import com.example.RPG_Manager20.Model.Enums.TipoConjuracao;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 
 import java.util.List;
@@ -17,16 +20,26 @@ public class Classe extends AbstractModel{
     private List<Atributos> proficienciaSalvaguarda;
     private List<String> proficienciaFerramentas;
 
+    private boolean isConjurador;
+
+    @Enumerated(EnumType.STRING)
+    private Atributos atributoConjuracao;
+
+    private TipoConjuracao tipoConjuracao;
+
     public Classe() {
     }
 
-    public Classe(Classes nomeClasse, int dadoDeVida, List<String> proficienciasArmas, List<String> proficienciasArmaduras, List<Atributos> proficienciaSalvaguarda, List<String> proficienciaFerramentas) {
+    public Classe(Classes nomeClasse, int dadoDeVida, List<String> proficienciasArmas, List<String> proficienciasArmaduras, List<Atributos> proficienciaSalvaguarda, List<String> proficienciaFerramentas, boolean isConjurador, Atributos atributoConjuracao, TipoConjuracao tipoConjuracao) {
         this.nomeClasse = nomeClasse;
         this.dadoDeVida = dadoDeVida;
         this.proficienciasArmas = proficienciasArmas;
         this.proficienciasArmaduras = proficienciasArmaduras;
         this.proficienciaSalvaguarda = proficienciaSalvaguarda;
         this.proficienciaFerramentas = proficienciaFerramentas;
+        this.isConjurador = isConjurador;
+        this.atributoConjuracao = atributoConjuracao;
+        this.tipoConjuracao = tipoConjuracao;
     }
 
     public Classes getNomeClasse() {
@@ -75,5 +88,29 @@ public class Classe extends AbstractModel{
 
     public void setProficienciaFerramentas(List<String> proficienciaFerramentas) {
         this.proficienciaFerramentas = proficienciaFerramentas;
+    }
+
+    public boolean isConjurador() {
+        return isConjurador;
+    }
+
+    public void setConjurador(boolean conjurador) {
+        isConjurador = conjurador;
+    }
+
+    public Atributos getAtributoConjuracao() {
+        return atributoConjuracao;
+    }
+
+    public void setAtributoConjuracao(Atributos atributoConjuracao) {
+        this.atributoConjuracao = atributoConjuracao;
+    }
+
+    public TipoConjuracao getTipoConjuracao() {
+        return tipoConjuracao;
+    }
+
+    public void setTipoConjuracao(TipoConjuracao tipoConjuracao) {
+        this.tipoConjuracao = tipoConjuracao;
     }
 }

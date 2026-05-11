@@ -1,6 +1,7 @@
 package com.example.RPG_Manager20.Model.Entities;
 
 import com.example.RPG_Manager20.Model.Enums.Atributos;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -18,6 +19,9 @@ public class Personagem extends AbstractModel {
     private int valorSabedoria;
     private int valorCarisma;
 
+    public Personagem() {
+    }
+
     public Personagem(String nomePersonagem, int nivelPersonagem, int valorForca, int valorDestreza, int valorConstituicao, int valorInteligencia, int valorSabedoria, int valorCarisma) {
         this.nomePersonagem = nomePersonagem;
         this.nivelPersonagem = nivelPersonagem;
@@ -28,10 +32,6 @@ public class Personagem extends AbstractModel {
         this.valorSabedoria = valorSabedoria;
         this.valorCarisma = valorCarisma;
     }
-
-    public Personagem() {
-    }
-
     public String getNomePersonagem() {
         return nomePersonagem;
     }

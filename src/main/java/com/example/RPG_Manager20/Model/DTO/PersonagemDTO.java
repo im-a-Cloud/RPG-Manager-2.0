@@ -57,4 +57,8 @@ public record PersonagemDTO(
     public int getBonusCarisma() {
         return (valorCarisma - 10) / 2;
     }
+
+    public int getBonusProficiencia() {
+        return Math.round((nivelPersonagem+3)/4) + 1;
+    }
 }
