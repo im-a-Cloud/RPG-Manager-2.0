@@ -1,8 +1,6 @@
 package com.example.RPG_Manager20.Model.Entities;
 
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.List;
 import java.util.Map;
@@ -11,9 +9,12 @@ import java.util.Map;
 @Table(name= "tb_magia")
 public class Magia extends AbstractModel{
     private String casting_time;
-    private List<String> classes;
+
     @Embedded
     private Components components;
+
+    @Column(columnDefinition = "TEXT")
+
     private String description;
     private String duration;
     private String level;
@@ -21,7 +22,17 @@ public class Magia extends AbstractModel{
     private String range;
     private boolean ritual;
     private String school;
+
+    @ElementCollection
+    @CollectionTable(name = "magia_classes", joinColumns = @JoinColumn(name = "magia_id"))
+    @Column(name = "classe")
+    private List<String> classes;
+
+    @ElementCollection
+    @CollectionTable(name = "magia_tags", joinColumns = @JoinColumn(name = "magia_id"))
+    @Column(name = "tag")
     private List<String> tags;
+
     private String type;
 
     public Magia(){
@@ -42,6 +53,22 @@ public class Magia extends AbstractModel{
         this.tags = tags;
         this.type = type;
     }
+
+    //quando nescessário
+    /*
+    public int getLevelAsInt() {
+        if (level == null) return 0;
+        if (level.equalsIgnoreCase("cantrip") || level.equalsIgnoreCase("truque") || level.equals("0")) {
+            return 0;
+        }
+        try {
+            return Integer.parseInt(level);
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+    }
+
+     */
 
     public String getCasting_time() {
         return casting_time;

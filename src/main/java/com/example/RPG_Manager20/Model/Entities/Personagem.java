@@ -4,6 +4,7 @@ import com.example.RPG_Manager20.Model.Enums.Atributos;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,6 +29,15 @@ public class Personagem extends AbstractModel {
     @JoinColumn(name = "classe_id")
     private Classe classePersonagem;
 
+    @ManyToMany
+    @JoinTable(
+            name = "personagem_magia",
+            joinColumns = @JoinColumn(name = "personagem_id"),
+            inverseJoinColumns = @JoinColumn(name = "magia_id")
+    )
+    private List<Magia> magias = new ArrayList<>();
+
+
     public Personagem() {
     }
 
@@ -40,6 +50,22 @@ public class Personagem extends AbstractModel {
         this.valorInteligencia = valorInteligencia;
         this.valorSabedoria = valorSabedoria;
         this.valorCarisma = valorCarisma;
+    }
+
+    public List<Magia> getMagias() {
+        return magias;
+    }
+
+    public void setMagias(List<Magia> magias) {
+        this.magias = magias;
+    }
+
+    public void adicionarMagia(Magia magia) {
+        this.magias.add(magia);
+    }
+
+    public void removerMagia(Magia magia) {
+        this.magias.remove(magia);
     }
 
     public Classe getClassePersonagem() {
