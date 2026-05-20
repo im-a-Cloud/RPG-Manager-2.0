@@ -1,9 +1,13 @@
 package com.example.RPG_Manager20.Controller;
 
 import com.example.RPG_Manager20.Model.DTO.ItemDTO;
+import com.example.RPG_Manager20.Model.DTO.Request.ItemRequestDTO;
+import com.example.RPG_Manager20.Model.DTO.Response.ItemResponseDTO;
 import com.example.RPG_Manager20.Model.Entities.Item;
 import com.example.RPG_Manager20.Model.Mapper.ItemMapper;
 import com.example.RPG_Manager20.Service.ItemService;
+import com.example.RPG_Manager20.Service.IventarioService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,21 +26,29 @@ public class ItemController {
     @Autowired
     private ItemMapper itemMapper;
 
+    @Autowired
+    private IventarioService iventarioService;
+
     public ItemController(ItemService itemService) {
 
     }
+
     @PostMapping("/criar")
-    public ResponseEntity<ItemDTO> crate(@RequestBody ItemDTO itemDTO){
-        Item item = itemMapper.toEntity(itemDTO);
-        itemService.save(item);
-        return new ResponseEntity<>(itemMapper.toDto(item), HttpStatus.CREATED);
+    public ResponseEntity<ItemResponseDTO> crate(@Valid @RequestBody ItemRequestDTO itemRequestDTO) {
+        ItemResponseDTO responseDTO = iventarioService.criarItem(itemRequestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
+
     @GetMapping("/listarTodos")
-    public List<ItemDTO> listarTodos(){
-        return itemService.list().stream().map(u->itemMapper.toDto(u)).collect(Collectors.toList());
+    public ResponseEntity<List<ItemResponseDTO>> listarTodos() {
+        List<ItemResponseDTO> itens = itemService.list().stream()
+                .map(itemMapper::toResponseDto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(itens);
     }
+
     @GetMapping("/listar/{idItem}")
-    public ResponseEntity<ItemDTO> getItem(@PathVariable("idItem") Long idItem){
-        return new ResponseEntity<>(itemMapper.toDto(itemService.findById(idItem)), HttpStatus.CREATED);
+    public ResponseEntity<ItemResponseDTO> getItem(@PathVariable("idItem") Long idItem) {
+        return ResponseEntity.ok(itemMapper.toResponseDto(itemService.findById(idItem)));
     }
 }

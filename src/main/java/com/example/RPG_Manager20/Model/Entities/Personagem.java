@@ -37,11 +37,18 @@ public class Personagem extends AbstractModel {
     )
     private List<Magia> magias = new ArrayList<>();
 
+    @ManyToMany
+    @JoinTable(
+            name = "personagem_item",
+            joinColumns = @JoinColumn(name = "personagem_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id")
+    )
+    private List<Item> inventarioPersonagem = new ArrayList<>();
 
     public Personagem() {
     }
 
-    public Personagem(String nomePersonagem, int nivelPersonagem, int valorForca, int valorDestreza, int valorConstituicao, int valorInteligencia, int valorSabedoria, int valorCarisma) {
+    public Personagem(String nomePersonagem, int nivelPersonagem, int valorForca, int valorDestreza, int valorConstituicao, int valorInteligencia, int valorSabedoria, int valorCarisma, Classe classePersonagem, List<Magia> magias, List<Item> inventarioPersonagem) {
         this.nomePersonagem = nomePersonagem;
         this.nivelPersonagem = nivelPersonagem;
         this.valorForca = valorForca;
@@ -50,6 +57,9 @@ public class Personagem extends AbstractModel {
         this.valorInteligencia = valorInteligencia;
         this.valorSabedoria = valorSabedoria;
         this.valorCarisma = valorCarisma;
+        this.classePersonagem = classePersonagem;
+        this.magias = magias;
+        this.inventarioPersonagem = inventarioPersonagem;
     }
 
     public List<Magia> getMagias() {
@@ -66,6 +76,20 @@ public class Personagem extends AbstractModel {
 
     public void removerMagia(Magia magia) {
         this.magias.remove(magia);
+    }
+
+    public void adicionarItem(Item item) {
+        for (Item i: inventarioPersonagem){
+            if (i.getId().equals(item.getId())){
+                i.setQuantidade(i.getQuantidade() + item.getQuantidade());
+                return;
+            }
+        }
+        inventarioPersonagem.add(item);
+    }
+
+    public void removerItem(Item item) {
+        inventarioPersonagem.remove(item);
     }
 
     public Classe getClassePersonagem() {
