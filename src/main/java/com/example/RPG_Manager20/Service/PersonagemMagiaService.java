@@ -71,21 +71,21 @@ public class PersonagemMagiaService {
     }
 
 
-    // ===== MÉTODOS PRIVADOS DE VALIDAÇÃO =====
+    //MÉTODOS DE VALIDAÇÃO
 
     private void validarMagiaParaPersonagem(Personagem personagem, Magia magia) {
         int nivelMagia = converterNivelMagia(magia.getLevel());
         int nivelPersonagem = personagem.getNivelPersonagem();
         TipoConjuracao tipo = personagem.getClassePersonagem().getTipoConjuracao();
 
-        // 1. Verificar se a classe pode usar magias
+        // Verificar se a classe pode usar magias
         if (tipo == null || tipo == TipoConjuracao.NENHUM) {
             throw new BusinessException(HttpStatus.BAD_REQUEST,
                     String.format("A classe %s não é uma classe conjuradora",
                             personagem.getClassePersonagem().getNomeClasse()));
         }
 
-        // 2. Verificar nível mínimo da magia
+        //Verificar nível mínimo da magia
         int nivelMaximoPermitido = calcularNivelMaximoMagia(nivelPersonagem, tipo);
 
         if (nivelMagia > nivelMaximoPermitido) {
@@ -98,7 +98,7 @@ public class PersonagemMagiaService {
                             nivelMagia));
         }
 
-        // 3. Verificar se a classe específica pode usar a magia
+        //Verificar se a classe específica pode usar a magia
         if (!classePodeUsarMagia(personagem.getClassePersonagem(), magia)) {
             throw new BusinessException(HttpStatus.BAD_REQUEST,
                     String.format("A classe %s não pode usar a magia %s",
@@ -106,7 +106,7 @@ public class PersonagemMagiaService {
                             magia.getName()));
         }
 
-        // 4. Verificar se já possui a magia
+        //Verificar se já possui a magia
         if (personagem.getMagias().contains(magia)) {
             throw new BusinessException(HttpStatus.BAD_REQUEST,
                     String.format("Personagem já conhece a magia %s", magia.getName()));

@@ -48,10 +48,19 @@ public class Personagem extends AbstractModel {
     @OneToMany(mappedBy = "personagem")
     private List<PersonagemPericia> periciasPersonagem = new ArrayList<>();
 
+    @ManyToMany
+    @JoinTable(
+            name = "personagem_habilidade",
+            joinColumns = @JoinColumn(name = "personagem_id"),
+            inverseJoinColumns = @JoinColumn(name = "habilidade_id")
+    )
+    private List<Habilidade> habilidadesPersonagem = new ArrayList<>();
+
+
     public Personagem() {
     }
 
-    public Personagem(String nomePersonagem, int nivelPersonagem, int valorForca, int valorDestreza, int valorConstituicao, int valorInteligencia, int valorSabedoria, int valorCarisma, Classe classePersonagem, List<Magia> magias, List<Item> inventarioPersonagem, List<PersonagemPericia> periciasPersonagem) {
+    public Personagem(String nomePersonagem, int nivelPersonagem, int valorForca, int valorDestreza, int valorConstituicao, int valorInteligencia, int valorSabedoria, int valorCarisma, Classe classePersonagem, List<Magia> magias, List<Item> inventarioPersonagem, List<PersonagemPericia> periciasPersonagem, List<Habilidade> habilidadesPersonagem) {
         this.nomePersonagem = nomePersonagem;
         this.nivelPersonagem = nivelPersonagem;
         this.valorForca = valorForca;
@@ -64,6 +73,15 @@ public class Personagem extends AbstractModel {
         this.magias = magias;
         this.inventarioPersonagem = inventarioPersonagem;
         this.periciasPersonagem = periciasPersonagem;
+        this.habilidadesPersonagem = habilidadesPersonagem;
+    }
+
+    public List<Habilidade> getHabilidadesPersonagem() {
+        return habilidadesPersonagem;
+    }
+
+    public void setHabilidadesPersonagem(List<Habilidade> habilidadesPersonagem) {
+        this.habilidadesPersonagem = habilidadesPersonagem;
     }
 
     public List<PersonagemPericia> getPericiasPersonagem() {

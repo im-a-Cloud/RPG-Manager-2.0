@@ -61,7 +61,6 @@ public class PersonagemPericiaService {
                     "Personagem já possui esta perícia");
         }
 
-
         PersonagemPericia personagemPericia = new PersonagemPericia(personagem,pericia, request.isProficiente());
         personagemPericiaRepository.save(personagemPericia);
 

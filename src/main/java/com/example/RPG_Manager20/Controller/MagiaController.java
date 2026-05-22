@@ -39,15 +39,4 @@ public class MagiaController {
     public List<MagiaDTO> listar() {
         return magiaService.list().stream().map(u-> magiaMapper.toDto(u)).collect(Collectors.toList());
     }
-    /* Buscar por ID (retorna ResponseDTO completo)
-    @GetMapping("/listar/{idMagia}")
-    public ResponseEntity<MagiaResponseDTO> getMagia(@PathVariable("idMagia") Long idMagia) {
-        return new ResponseEntity<>(
-                magiaMapper.toResponseDTO(magiaService.findById(idMagia)),
-                HttpStatus.OK
-        );
-    }
-
-     */
-
 }

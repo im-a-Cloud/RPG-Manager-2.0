@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 public record AdicionarPericiaRequestDTO(
         @NotNull(message = "ID da perícia é obrigatório")
         Long periciaId,
-
         boolean isProficiente
 ) {
 }

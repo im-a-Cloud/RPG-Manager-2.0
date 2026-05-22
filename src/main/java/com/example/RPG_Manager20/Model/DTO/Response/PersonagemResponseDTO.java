@@ -1,5 +1,6 @@
 package com.example.RPG_Manager20.Model.DTO.Response;
 
+import com.example.RPG_Manager20.Model.DTO.HabilidadeDTO;
 import com.example.RPG_Manager20.Model.DTO.ItemDTO;
 import com.example.RPG_Manager20.Model.DTO.PericiaPersonagemDTO;
 import com.example.RPG_Manager20.Model.Enums.Atributos;
@@ -19,7 +20,8 @@ public record PersonagemResponseDTO(
         AtributosInfo atributos,
         MagiaInfo magia,
         List<ItemDTO> inventario,
-        List<PericiaPersonagemDTO> pericias  // ← Usando o DTO separado
+        List<PericiaPersonagemDTO> pericias,
+        List<HabilidadeDTO> habilidades
 ) {
 
     public record ClasseInfo(
@@ -93,6 +95,16 @@ public record PersonagemResponseDTO(
                 .map(pp -> PericiaPersonagemDTO.from(pp, personagem, bonusProficiencia))
                 .collect(Collectors.toList());
 
+        List<HabilidadeDTO> habilidadesDTO = personagem.getHabilidadesPersonagem().stream()
+                .map(habilidade -> new HabilidadeDTO(
+                        habilidade.getNomeHabilidade(),
+                        habilidade.getDescricaoHabilidade(),
+                        habilidade.getOrigemHabilidade(),
+                        habilidade.getUsosHabilidade(),
+                        habilidade.getRecargaHabilidade()
+                ))
+                .collect(Collectors.toList());
+
         return new PersonagemResponseDTO(
                 personagem.getId(),
                 personagem.getNomePersonagem(),
@@ -114,7 +126,8 @@ public record PersonagemResponseDTO(
                 ),
                 new MagiaInfo(bonusProficiencia, cd, ataque),
                 inventarioDTO,
-                periciasDTO
+                periciasDTO,
+                habilidadesDTO
         );
     }
 }
