@@ -45,10 +45,13 @@ public class Personagem extends AbstractModel {
     )
     private List<Item> inventarioPersonagem = new ArrayList<>();
 
+    @OneToMany(mappedBy = "personagem")
+    private List<PersonagemPericia> periciasPersonagem = new ArrayList<>();
+
     public Personagem() {
     }
 
-    public Personagem(String nomePersonagem, int nivelPersonagem, int valorForca, int valorDestreza, int valorConstituicao, int valorInteligencia, int valorSabedoria, int valorCarisma, Classe classePersonagem, List<Magia> magias, List<Item> inventarioPersonagem) {
+    public Personagem(String nomePersonagem, int nivelPersonagem, int valorForca, int valorDestreza, int valorConstituicao, int valorInteligencia, int valorSabedoria, int valorCarisma, Classe classePersonagem, List<Magia> magias, List<Item> inventarioPersonagem, List<PersonagemPericia> periciasPersonagem) {
         this.nomePersonagem = nomePersonagem;
         this.nivelPersonagem = nivelPersonagem;
         this.valorForca = valorForca;
@@ -60,6 +63,15 @@ public class Personagem extends AbstractModel {
         this.classePersonagem = classePersonagem;
         this.magias = magias;
         this.inventarioPersonagem = inventarioPersonagem;
+        this.periciasPersonagem = periciasPersonagem;
+    }
+
+    public List<PersonagemPericia> getPericiasPersonagem() {
+        return periciasPersonagem;
+    }
+
+    public void setPericiasPersonagem(List<PersonagemPericia> periciasPersonagem) {
+        this.periciasPersonagem = periciasPersonagem;
     }
 
     public List<Magia> getMagias() {

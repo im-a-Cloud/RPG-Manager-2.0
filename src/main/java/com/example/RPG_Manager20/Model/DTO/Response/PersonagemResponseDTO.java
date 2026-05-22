@@ -1,6 +1,7 @@
 package com.example.RPG_Manager20.Model.DTO.Response;
 
 import com.example.RPG_Manager20.Model.DTO.ItemDTO;
+import com.example.RPG_Manager20.Model.DTO.PericiaPersonagemDTO;
 import com.example.RPG_Manager20.Model.Enums.Atributos;
 import com.example.RPG_Manager20.Model.Enums.Classes;
 import com.example.RPG_Manager20.Model.Enums.TipoConjuracao;
@@ -17,7 +18,8 @@ public record PersonagemResponseDTO(
         ClasseInfo classe,
         AtributosInfo atributos,
         MagiaInfo magia,
-        List<ItemDTO> inventario
+        List<ItemDTO> inventario,
+        List<PericiaPersonagemDTO> pericias  // ← Usando o DTO separado
 ) {
 
     public record ClasseInfo(
@@ -71,6 +73,8 @@ public record PersonagemResponseDTO(
             cd = 8 + bonusProficiencia + modificadorConjuracao;
             ataque = bonusProficiencia + modificadorConjuracao;
         }
+
+        // Converter inventário
         List<ItemDTO> inventarioDTO = personagem.getInventarioPersonagem().stream()
                 .map(item -> new ItemDTO(
                         item.getNomeItem(),
@@ -82,6 +86,11 @@ public record PersonagemResponseDTO(
                         item.isPrecisaSintonizacao(),
                         item.getQuantidade()
                 ))
+                .collect(Collectors.toList());
+
+        // ← Usando o PericiaPersonagemDTO
+        List<PericiaPersonagemDTO> periciasDTO = personagem.getPericiasPersonagem().stream()
+                .map(pp -> PericiaPersonagemDTO.from(pp, personagem, bonusProficiencia))
                 .collect(Collectors.toList());
 
         return new PersonagemResponseDTO(
@@ -104,7 +113,8 @@ public record PersonagemResponseDTO(
                         personagem.getValorCarisma()
                 ),
                 new MagiaInfo(bonusProficiencia, cd, ataque),
-                inventarioDTO
+                inventarioDTO,
+                periciasDTO
         );
     }
 }

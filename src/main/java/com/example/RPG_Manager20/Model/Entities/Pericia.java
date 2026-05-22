@@ -2,12 +2,15 @@ package com.example.RPG_Manager20.Model.Entities;
 
 import com.example.RPG_Manager20.Model.Enums.Atributos;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_pericia")
 public class Pericia extends AbstractModel{
     private String nomePericia;
+    @Enumerated(EnumType.STRING)
     private Atributos atributoChave;
     private int valorTotal;
 
