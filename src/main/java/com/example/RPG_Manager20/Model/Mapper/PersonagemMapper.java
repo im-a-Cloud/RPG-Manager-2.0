@@ -2,6 +2,7 @@ package com.example.RPG_Manager20.Model.Mapper;
 
 import com.example.RPG_Manager20.Model.DTO.PersonagemDTO;
 import com.example.RPG_Manager20.Model.DTO.Request.PersonagemRequestDTO;
+import com.example.RPG_Manager20.Model.DTO.Response.PersonagemResponseDTO;
 import com.example.RPG_Manager20.Model.DTO.Summary.PersonagemSummaryDTO;
 import com.example.RPG_Manager20.Model.Entities.Personagem;
 import org.mapstruct.Mapper;
@@ -23,6 +24,8 @@ public interface PersonagemMapper {
     @Mapping(target = "bonusSabedoria", ignore = true)
     @Mapping(target = "bonusCarisma", ignore = true)
     PersonagemDTO toDto(Personagem entity);
+
+    PersonagemResponseDTO toResponseDto(Personagem entity);
 
 
     @Mapping(target = "id", ignore = true)

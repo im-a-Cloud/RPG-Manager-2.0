@@ -1,12 +1,10 @@
 package com.example.RPG_Manager20.Controller;
 
-import com.example.RPG_Manager20.Model.DTO.ItemDTO;
 import com.example.RPG_Manager20.Model.DTO.Request.ItemRequestDTO;
 import com.example.RPG_Manager20.Model.DTO.Response.ItemResponseDTO;
-import com.example.RPG_Manager20.Model.Entities.Item;
 import com.example.RPG_Manager20.Model.Mapper.ItemMapper;
 import com.example.RPG_Manager20.Service.ItemService;
-import com.example.RPG_Manager20.Service.IventarioService;
+import com.example.RPG_Manager20.Service.InventarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +25,7 @@ public class ItemController {
     private ItemMapper itemMapper;
 
     @Autowired
-    private IventarioService iventarioService;
+    private InventarioService inventarioService;
 
     public ItemController(ItemService itemService) {
 
@@ -35,7 +33,7 @@ public class ItemController {
 
     @PostMapping("/criar")
     public ResponseEntity<ItemResponseDTO> crate(@Valid @RequestBody ItemRequestDTO itemRequestDTO) {
-        ItemResponseDTO responseDTO = iventarioService.criarItem(itemRequestDTO);
+        ItemResponseDTO responseDTO = inventarioService.criarItem(itemRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
 

@@ -1,10 +1,14 @@
 package com.example.RPG_Manager20.Model.DTO.Response;
 
+import com.example.RPG_Manager20.Model.DTO.ItemDTO;
 import com.example.RPG_Manager20.Model.Enums.Atributos;
 import com.example.RPG_Manager20.Model.Enums.Classes;
 import com.example.RPG_Manager20.Model.Enums.TipoConjuracao;
 import com.example.RPG_Manager20.Model.Entities.Personagem;
 import com.example.RPG_Manager20.Model.Entities.Classe;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public record PersonagemResponseDTO(
         Long id,
@@ -12,7 +16,8 @@ public record PersonagemResponseDTO(
         int nivelPersonagem,
         ClasseInfo classe,
         AtributosInfo atributos,
-        MagiaInfo magia
+        MagiaInfo magia,
+        List<ItemDTO> inventario
 ) {
 
     public record ClasseInfo(
@@ -66,6 +71,18 @@ public record PersonagemResponseDTO(
             cd = 8 + bonusProficiencia + modificadorConjuracao;
             ataque = bonusProficiencia + modificadorConjuracao;
         }
+        List<ItemDTO> inventarioDTO = personagem.getInventarioPersonagem().stream()
+                .map(item -> new ItemDTO(
+                        item.getNomeItem(),
+                        item.getDescricaoItem(),
+                        item.getPrecoItem(),
+                        item.getRaridadeItem(),
+                        item.getPesoItem(),
+                        item.isMagico(),
+                        item.isPrecisaSintonizacao(),
+                        item.getQuantidade()
+                ))
+                .collect(Collectors.toList());
 
         return new PersonagemResponseDTO(
                 personagem.getId(),
@@ -86,7 +103,8 @@ public record PersonagemResponseDTO(
                         personagem.getValorSabedoria(),
                         personagem.getValorCarisma()
                 ),
-                new MagiaInfo(bonusProficiencia, cd, ataque)
+                new MagiaInfo(bonusProficiencia, cd, ataque),
+                inventarioDTO
         );
     }
 }

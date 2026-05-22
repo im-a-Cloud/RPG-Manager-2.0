@@ -8,5 +8,6 @@ public record ItemDTO (String nomeItem,
                        RaridadeItem raridadeItem,
                        double pesoItem,
                        boolean isMagico,
-                       boolean precisaSintonizacao) {
+                       boolean precisaSintonizacao,
+                       int quantidade) {
 }

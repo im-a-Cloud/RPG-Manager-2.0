@@ -92,6 +92,14 @@ public class Personagem extends AbstractModel {
         inventarioPersonagem.remove(item);
     }
 
+    public List<Item> getInventarioPersonagem() {
+        return inventarioPersonagem;
+    }
+
+    public void setInventarioPersonagem(List<Item> inventarioPersonagem) {
+        this.inventarioPersonagem = inventarioPersonagem;
+    }
+
     public Classe getClassePersonagem() {
         return classePersonagem;
     }
